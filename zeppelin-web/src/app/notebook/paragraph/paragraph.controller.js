@@ -482,6 +482,14 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
           $scope.paragraph.status = 'FAILED';
           alert('重新建立连接失败，请联系管理员');
         });
+      $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/setting/restart/hive')
+        .success(function(data, status, headers, config) {
+          $scope.paragraph.status = 'OK';
+          alert('重新建立连接成功！');
+        }).error(function(data, status, headers, config) {
+          $scope.paragraph.status = 'FAILED';
+          alert('重新建立连接失败，请联系管理员');
+        });
       return;
     }
 
@@ -555,9 +563,9 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
           $scope.paragraph.status = 'OK';
           alert('自动重新建立连接成功！');
         }).error(function(data, status, headers, config) {
-        $scope.paragraph.status = 'FAILED';
-        alert('自动重新建立连接失败，请尝试执行restart手动重连');
-      });
+          $scope.paragraph.status = 'FAILED';
+          alert('自动重新建立连接失败，请尝试执行restart手动重连');
+        });
     } else {
       flag = 0;
     }
