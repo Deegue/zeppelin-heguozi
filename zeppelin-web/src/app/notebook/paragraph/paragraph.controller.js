@@ -553,7 +553,7 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
       $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/setting/restart/spark221')
         .success(function(data, status, headers, config) {
           $scope.paragraph.status = 'OK';
-          alert('自动重新建立连接成功！');
+          alert('自动重新建立连接成功！(spark interpreter)');
         }).error(function(data, status, headers, config) {
           $scope.paragraph.status = 'FAILED';
           alert('自动重新建立连接失败，请尝试执行restart手动重连');
@@ -561,7 +561,7 @@ function ParagraphCtrl($scope, $rootScope, $route, $window, $routeParams, $locat
       $http.put(baseUrlSrv.getRestApiBase() + '/interpreter/setting/restart/hive')
         .success(function(data, status, headers, config) {
           $scope.paragraph.status = 'OK';
-          alert('自动重新建立连接成功！');
+          alert('自动重新建立连接成功！(hive interpreter)');
         }).error(function(data, status, headers, config) {
           $scope.paragraph.status = 'FAILED';
           alert('自动重新建立连接失败，请尝试执行restart手动重连');
