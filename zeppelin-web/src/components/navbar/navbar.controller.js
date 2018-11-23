@@ -31,16 +31,25 @@ function NavCtrl($scope, $rootScope, $http, $routeParams, $location,
   vm.TRASH_FOLDER_ID = TRASH_FOLDER_ID;
   vm.isFilterNote = isFilterNote;
   vm.numberOfNotesDisplayed = 10;
+  vm.toThriftServer01 = toThriftServer01;
+  vm.toThriftServer02 = toThriftServer02;
+  let thriftserver1 = 'application_1540866437371_314150';
+  let thriftserver2 = 'application_1540866437371_314156';
+  let interpreterSettings = [];
+  let interpreterSettingsTmp;
+
   let revisionSupported = false;
 
   $scope.query = {q: ''};
 
   initController();
+  initThriftServer();
 
   function getZeppelinVersion() {
     $http.get(baseUrlSrv.getRestApiBase() + '/version').success(
       function(data, status, headers, config) {
-        $rootScope.zeppelinVersion = data.body.version;
+        // $rootScope.zeppelinVersion = data.body.version;
+        $rootScope.zeppelinVersion = '0.8.1-2dfire-v03';
       }).error(
       function(data, status, headers, config) {
         console.log('Error %o %o', status, data.message);
@@ -57,6 +66,44 @@ function NavCtrl($scope, $rootScope, $http, $routeParams, $location,
 
     getZeppelinVersion();
     loadNotes();
+  }
+
+  function initThriftServer() {
+    $http.get(baseUrlSrv.getRestApiBase() + '/interpreter/setting')
+      .then(function(res) {
+        interpreterSettings = res.data.body;
+      }).catch(function(res) {
+        if (res.status === 401) {
+          alert('You don\'t have permission on this page');
+        }
+        console.log('Error %o %o', res.status, res.data ? res.data.message : '');
+      });
+  }
+
+  function setSparkLog() {
+    if (interpreterSettings !== undefined) {
+      let index = _.findIndex(interpreterSettings, {'name': 'spark221'});
+      if (index !== '-1') {
+        interpreterSettingsTmp = angular.copy(interpreterSettings[index]);
+        const obj = eval(interpreterSettingsTmp);
+        thriftserver1 = obj.properties.spark_log01.value;
+        thriftserver2 = obj.properties.spark_log02.value;
+      }
+    }
+  }
+
+  function toThriftServer01() {
+    setTimeout(initThriftServer(), 1000);
+    setSparkLog();
+    window.location.href = 'http://cloudera.2dfire.net/hadoop1164-8088/proxy/' +
+      thriftserver1 + '/jobs/';
+  }
+
+  function toThriftServer02() {
+    setTimeout(initThriftServer(), 1000);
+    setSparkLog();
+    window.location.href = 'http://cloudera.2dfire.net/hadoop1164-8088/proxy/' +
+      thriftserver2 + '/jobs/';
   }
 
   function isFilterNote(note) {
