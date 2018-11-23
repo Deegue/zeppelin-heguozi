@@ -174,12 +174,15 @@ a.navbar-brand:hover {
 }
 
 .username {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px;
-  display: inline-block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+  /*max-width: 120px;*/
+  /*display: inline-block;*/
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  top: 5px;
+  font-weight: 300;
+  font-size: 16px;
 }
 
 
