@@ -928,7 +928,7 @@ function ResultCtrl($scope, $rootScope, $route, $window, $routeParams, $location
     if ($scope.canExport === 0) {
       console.log('taskId got:' + $scope.exportId);
       if ($scope.exportId === '-1') {
-        alert('不可能出现的情况。。请联系管理员~');
+        alert('请联系管理员~');
       } else {
         const taskId = $scope.exportId;
         $http({
